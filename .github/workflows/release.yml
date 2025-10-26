@@ -62,7 +62,7 @@ jobs:
       #----------------------------------------------
       #  -----  upload artifacts  -----
       #----------------------------------------------
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v5
         with:
           name: pypi_files
           path: dist
@@ -94,7 +94,7 @@ jobs:
           python-version: ${{ env.MINIMUM_PYTHON_VERSION }}
 
       - name: get dist artifacts
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v6
         with:
           name: pypi_files
           path: dist
@@ -140,7 +140,7 @@ jobs:
         with:
           python-version: ${{ env.MINIMUM_PYTHON_VERSION }}
       - name: get dist artifacts
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v6
         with:
           name: pypi_files
           path: dist

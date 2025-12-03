@@ -155,3 +155,10 @@ def test_iadd_two_running_mean_var() -> None:
     assert a.num_values == 11
     assert a.M1 == -18.0 / 11
     assert a.M2 == 5.2 + 25.0 * 24 / 11
+
+
+@pytest.mark.parametrize("klass", [RunningMeanVar, RunningStats])
+def test_that_it_is_possible_to_add_two_empty(klass) -> None:
+    a = klass() + klass()
+
+    assert a.num_values == 0

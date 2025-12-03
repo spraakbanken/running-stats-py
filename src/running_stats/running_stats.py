@@ -51,6 +51,9 @@ class RunningMeanVar:
         combined = RunningMeanVar()
         combined.num_values = self.num_values + other.num_values
 
+        if combined.num_values == 0:
+            return combined
+
         delta = other.M1 - self.M1
         delta2 = delta * delta
 

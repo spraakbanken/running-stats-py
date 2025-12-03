@@ -1,5 +1,3 @@
-from typing import Union
-
 import pytest
 
 from running_stats.running_stats import RunningMeanVar, RunningStats
@@ -34,7 +32,7 @@ def fixture_value_list() -> list[float]:
 
 
 @pytest.mark.parametrize("cls", [RunningMeanVar, RunningStats])
-def test_initial_values(cls: Union[type[RunningStats], type[RunningMeanVar]]) -> None:
+def test_initial_values(cls: type[RunningStats] | type[RunningMeanVar]) -> None:
     rs_empty = cls()
     assert rs_empty.num_values == 0
     assert rs_empty.M1 == 0.0
@@ -63,7 +61,7 @@ def test_variance_n_eq_0_or_1(M2: float, n: int) -> None:  # noqa: N803
 
 
 @pytest.mark.parametrize("cls", [RunningMeanVar, RunningStats])
-def test_one_value(cls: Union[type[RunningStats], type[RunningMeanVar]]) -> None:
+def test_one_value(cls: type[RunningStats] | type[RunningMeanVar]) -> None:
     rs_one_value = cls()
     rs_one_value.push(4.0)
     assert rs_one_value.num_values == 1
@@ -80,7 +78,7 @@ def test_running_stats_one_value() -> None:
 
 
 @pytest.mark.parametrize("cls", [RunningMeanVar, RunningStats])
-def test_two_values(cls: Union[type[RunningStats], type[RunningMeanVar]]) -> None:
+def test_two_values(cls: type[RunningStats] | type[RunningMeanVar]) -> None:
     rs_two_values = cls()
     rs_two_values.push(4.0)
     rs_two_values.push(6.0)
@@ -105,7 +103,7 @@ def test_running_stats_two_values() -> None:
 
 
 @pytest.mark.parametrize("cls", [RunningMeanVar, RunningStats])
-def test_three_values(cls: Union[type[RunningStats], type[RunningMeanVar]]) -> None:
+def test_three_values(cls: type[RunningStats] | type[RunningMeanVar]) -> None:
     rs = cls()
     rs.push(4.0)
     rs.push(6.0)
@@ -155,3 +153,12 @@ def test_iadd_two_running_mean_var() -> None:
     assert a.num_values == 11
     assert a.M1 == -18.0 / 11
     assert a.M2 == 5.2 + 25.0 * 24 / 11
+
+
+@pytest.mark.parametrize("klass", [RunningMeanVar, RunningStats])
+def test_that_it_is_possible_to_add_two_empty(
+    klass: type[RunningMeanVar] | type[RunningStats],
+) -> None:
+    a = klass() + klass()
+
+    assert a.num_values == 0

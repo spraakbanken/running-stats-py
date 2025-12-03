@@ -51,11 +51,20 @@ class RunningMeanVar:
         combined = RunningMeanVar()
         combined.num_values = self.num_values + other.num_values
 
+        if combined.num_values == 0:
+            return combined
+
         delta = other.M1 - self.M1
         delta2 = delta * delta
 
-        combined.M1 = (self.M1 * self.num_values + other.M1 * other.num_values) / combined.num_values
-        combined.M2 = self.M2 + other.M2 + delta2 * self.num_values * other.num_values / combined.num_values
+        combined.M1 = (
+            self.M1 * self.num_values + other.M1 * other.num_values
+        ) / combined.num_values
+        combined.M2 = (
+            self.M2
+            + other.M2
+            + delta2 * self.num_values * other.num_values / combined.num_values
+        )
 
         return combined
 
@@ -82,3 +91,71 @@ class RunningStats(RunningMeanVar):
             - 4 * delta_n * self.M3
         )
         self.M2 += term1
+
+    def __add__(self, other: "RunningStats") -> "RunningStats":  # type: ignore
+        """Combine 2 RunningMeanVar instances."""
+        combined = RunningStats()
+        combined.num_values = self.num_values + other.num_values
+
+        if combined.num_values == 0:
+            return combined
+
+        delta = other.M1 - self.M1
+        delta2 = delta * delta
+        delta3 = delta * delta2
+        delta4 = delta2 * delta2
+
+        combined.M1 = (
+            self.M1 * self.num_values + other.M1 * other.num_values
+        ) / combined.num_values
+
+        combined.M2 = (
+            self.M2
+            + other.M2
+            + delta2 * self.num_values * other.num_values / combined.num_values
+        )
+
+        combined.M3 = (
+            self.M3
+            + other.M3
+            + delta3
+            * self.num_values
+            * other.num_values
+            * (self.num_values - other.num_values)
+            / (combined.num_values * combined.num_values)
+        )
+        combined.M3 += (
+            3.0
+            * delta
+            * (self.num_values * other.M2 - other.num_values * self.M2)
+            / combined.num_values
+        )
+
+        combined.M4 = (
+            self.M4
+            + other.M4
+            + delta4
+            * self.num_values
+            * other.num_values
+            * (
+                self.num_values * self.num_values
+                - self.num_values * other.num_values
+                + other.num_values * other.num_values
+            )
+            / (combined.num_values * combined.num_values * combined.num_values)
+        )
+        combined.M4 += (
+            6.0
+            * delta2
+            * (
+                self.num_values * self.num_values * other.M2
+                + other.num_values * other.num_values * self.M2
+            )
+            / (combined.num_values * combined.num_values)
+            + 4.0
+            * delta
+            * (self.num_values * other.M3 - other.num_values * self.M3)
+            / combined.num_values
+        )
+
+        return combined

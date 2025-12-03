@@ -30,8 +30,8 @@ license = { text = "MIT" }
 
 [project.urls]
 Homepage = "https://spraakbanken.gu.se"
-Repository = "https://github.com/kod-kristoff/running-stats-py"
-Issues = "https://github.com/kod-kristoff/running-stats-py/issues"
+Repository = "https://github.com/spraakbanken/running-stats-py"
+Issues = "https://github.com/spraakbanken/running-stats-py/issues"
 
 [build-system]
 requires = ["uv_build>=0.9.6,<0.10.0"]

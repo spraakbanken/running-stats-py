@@ -57,8 +57,14 @@ class RunningMeanVar:
         delta = other.M1 - self.M1
         delta2 = delta * delta
 
-        combined.M1 = (self.M1 * self.num_values + other.M1 * other.num_values) / combined.num_values
-        combined.M2 = self.M2 + other.M2 + delta2 * self.num_values * other.num_values / combined.num_values
+        combined.M1 = (
+            self.M1 * self.num_values + other.M1 * other.num_values
+        ) / combined.num_values
+        combined.M2 = (
+            self.M2
+            + other.M2
+            + delta2 * self.num_values * other.num_values / combined.num_values
+        )
 
         return combined
 

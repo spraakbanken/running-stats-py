@@ -5,6 +5,25 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [unreleased]
+
+### Added
+
+- Add **add** to RunningStats by [@kod-kristoff](https://github.com/kod-kristoff)
+
+### Documentation
+
+- Add _Usage_ and _Minimum Supported Python Version Policy_ sections to Readme.md by [@kod-kristoff](https://github.com/kod-kristoff)
+
+### Fixed
+
+- Allow two add two empty RunningMeanVar by [@kod-kristoff](https://github.com/kod-kristoff)
+
+### New Contributors
+
+- @dependabot[bot] made their first contribution
+- @pre-commit-ci[bot] made their first contribution
+
 ## [0.1.3] - 2025-02-27
 
 ### Added

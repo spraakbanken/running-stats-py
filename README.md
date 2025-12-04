@@ -8,7 +8,6 @@
 [![Stage](https://img.shields.io/pypi/status/running-stats.svg)](https://pypi.org/project/running-stats/)
 
 [![Code Coverage](https://codecov.io/gh/spraakbanken/running-stats-py/g/branch/master/graph/badge.svg)](https://codecov.io/gh/spraakbanken/running-stats-py)
-[![Maintainability](https://qlty.sh/badges/6581c0f9-f9d8-4104-ba06-f8e61a4f3677/maintainability.svg)](https://qlty.sh/gh/spraakbanken/projects/running-stats-py)
 
 [![CI(check)](https://github.com/spraakbanken/running-stats-py/actions/workflows/check.yml/badge.svg)](https://github.com/spraakbanken/running-stats-py/actions/workflows/check.yml)
 [![CI(release)](https://github.com/spraakbanken/running-stats-py/actions/workflows/release.yml/badge.svg)](https://github.com/spraakbanken/running-stats-py/actions/workflows/release.yml)

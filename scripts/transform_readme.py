@@ -1,3 +1,7 @@
+# /// script
+# requires-python = ">=3.11"
+# dependencies = []
+# ///
 """Transform the README.md to support a specific deployment target.
 
 By default, we assume that our README.md will be rendered on GitHub. However, different

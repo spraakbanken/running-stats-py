@@ -55,7 +55,7 @@ jobs:
 
       - name: Prepare README.md
         run: |
-          python scripts/transform_readme.py --target pypi
+          uv run --script scripts/transform_readme.py --target pypi
           cat README.md
 
       #----------------------------------------------

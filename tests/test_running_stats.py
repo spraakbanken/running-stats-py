@@ -54,14 +54,14 @@ def test_running_stats_initial_values() -> None:
 
 @pytest.mark.parametrize("M2", [0.0, 2.0, 4.0, 5.0])
 @pytest.mark.parametrize("n", [2, 5, 11])
-def test_variance_n_gt_1(M2: float, n: int) -> None:  # ruff: ignore[invalid-argument-name]
+def test_variance_n_gt_1(M2: float, n: int) -> None:
     rs = RunningMeanVar(num_values=n, M2=M2)
     assert math.isclose(rs.variance(), M2 / (n - 1))
 
 
 @pytest.mark.parametrize("M2", [0.0, 2.0, 4.0, 5.0])
 @pytest.mark.parametrize("n", [0, 1])
-def test_variance_n_eq_0_or_1(M2: float, n: int) -> None:  # ruff: ignore[invalid-argument-name]
+def test_variance_n_eq_0_or_1(M2: float, n: int) -> None:
     rs = RunningMeanVar(num_values=n, M2=M2)
     assert is_close_near_zero(rs.variance(), 0.0)
 
@@ -100,11 +100,11 @@ def test_running_stats_two_values() -> None:
         rs.push(value)
     expected_mean = sum(values) / len(values)
     assert expected_mean == rs.M1
-    expected_M2 = sum((x - expected_mean) ** 2 for x in values)  # ruff: ignore[non-lowercase-variable-in-function]
+    expected_M2 = sum((x - expected_mean) ** 2 for x in values)
     assert expected_M2 == rs.M2
-    expected_M3 = sum((x - expected_mean) ** 3 for x in values)  # ruff: ignore[non-lowercase-variable-in-function]
+    expected_M3 = sum((x - expected_mean) ** 3 for x in values)
     assert expected_M3 == rs.M3
-    expected_M4 = sum((x - expected_mean) ** 4 for x in values)  # ruff: ignore[non-lowercase-variable-in-function]
+    expected_M4 = sum((x - expected_mean) ** 4 for x in values)
     assert expected_M4 == rs.M4
 
 

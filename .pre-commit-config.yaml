@@ -22,7 +22,7 @@ repos:
       - id: check-added-large-files
   - repo: https://github.com/astral-sh/ruff-pre-commit
     # Ruff version.
-    rev: v0.14.4
+    rev: v0.17.5
     hooks:
       # Run the linter.
       - id: ruff-check
@@ -30,7 +30,7 @@ repos:
       - id: ruff-format
 
   - repo: https://github.com/astral-sh/uv-pre-commit
-    rev: 0.8.15
+    rev: 0.13.8
     hooks:
       - id: uv-lock
       # Update the uv lockfile
@@ -47,17 +47,17 @@ repos:
   # zizmor detects security vulnerabilities in GitHub Actions workflows.
   # Additional configuration for the tool is found in `.github/zizmor.yml`
   - repo: https://github.com/woodruffw/zizmor-pre-commit
-    rev: v1.6.0
+    rev: v1.32.0
     hooks:
       - id: zizmor
 
   - repo: https://github.com/python-jsonschema/check-jsonschema
-    rev: 0.33.0
+    rev: 0.39.0
     hooks:
       - id: check-github-workflows
 
   - repo: https://github.com/crate-ci/committed
-    rev: v1.1.7
+    rev: v1.1.12
     hooks:
       - id: committed
         stages: [commit-msg]

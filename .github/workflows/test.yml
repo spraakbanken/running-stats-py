@@ -16,8 +16,8 @@ permissions:
   contents: read
 
 env:
-  MINIMUM_PYTHON_VERSION: "3.10"
-  UV_VERSION: "0.9.1"
+  MINIMUM_PYTHON_VERSION: "3.11"
+  UV_VERSION: "0.12.20"
 
 jobs:
   coverage:
@@ -33,11 +33,11 @@ jobs:
         os: [ubuntu]
         python-version:
           # remove the unused versions
-          - "3.10"
           - "3.11"
           - "3.12"
           - "3.13"
           - "3.14"
+          - "3.15"
 
     runs-on: ${{ matrix.os }}-latest
     env:
@@ -45,20 +45,20 @@ jobs:
       PYTHON: ${{ matrix.python-version }}
       CS_ACCESS_TOKEN: ${{ secrets.CS_ACCESS_TOKEN }}
     steps:
-      - uses: actions/checkout@1af3b93b6815bc44a9784bd300feb67ff0d1eeb3 # v5.0.0
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v5.0.0
         with:
           persist-credentials: false
           submodules: true
 
       - name: Set up uv
-        uses: astral-sh/setup-uv@1e862dfacbd1d6d858c55d9b792c756523627244 # 7.1.4
+        uses: astral-sh/setup-uv@68559e99cc807c1eb7e9238fd43a15bba460eec2 # 10.3.3
         with:
           version: ${{ env.UV_VERSION }}
           enable-cache: true
 
       - name: Set up Python ${{ matrix.python-version }}
         id: setup-python
-        uses: actions/setup-python@83679a892e2d95755f2dac6acb0bfd1e9ac5d548 # v6.1.0
+        uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7.1.0
         with:
           python-version: ${{ matrix.python-version }}
 
@@ -68,18 +68,8 @@ jobs:
       - name: Run tests for coverage
         run: make test-w-coverage
 
-      - name: convert coverage data to lcov
-        run: |
-          ls
-          uv run coverage lcov -o reports/lcov.info
-
-      - uses: qltysh/qlty-action/coverage@main
-        with:
-          coverage-token: ${{ secrets.QLTY_COVERAGE_TOKEN }}
-          files: reports/lcov.info
-
       - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@5a1091511ad55cbe89839c7260b706298ca349f7 # v5.5.1
+        uses: codecov/codecov-action@303a32d7a59b442fa8d48b6a1cc6825c09c847a5 # v7.1.1
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           # directory: ./coverage
@@ -91,7 +81,9 @@ jobs:
           verbose: true
       - name: Install codescene coverage tool
         if: ${{ env.CS_ACCESS_TOKEN != '' }}
-        run: curl https://downloads.codescene.io/enterprise/cli/install-cs-coverage-tool.sh | bash -s -- -y
+        run: curl
+          https://downloads.codescene.io/enterprise/cli/install-cs-coverage-tool.sh
+          | bash -s -- -y
       - name: Upload coverage data to CodeScene
         if: ${{ env.CS_ACCESS_TOKEN != '' }}
         run: cs-coverage upload --format "lcov" --metric "line-coverage" coverage.lcov
@@ -103,7 +95,7 @@ jobs:
     # This requires the secret `CODECOV_TOKEN` be set as secret on GitHub, both for
     # Actions and Dependabot
 
-    name: "${{ matrix.os }} / 3.10 / doctest"
+    name: "${{ matrix.os }} / 3.11 / doctest"
     strategy:
       max-parallel: 4
       fail-fast: false
@@ -115,20 +107,20 @@ jobs:
       OS: ${{ matrix.os }}-latest
       CS_ACCESS_TOKEN: ${{ secrets.CS_ACCESS_TOKEN }}
     steps:
-      - uses: actions/checkout@1af3b93b6815bc44a9784bd300feb67ff0d1eeb3 # v5.0.0
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v5.0.0
         with:
           persist-credentials: false
           submodules: true
 
       - name: Set up uv
-        uses: astral-sh/setup-uv@1e862dfacbd1d6d858c55d9b792c756523627244 # 7.1.4
+        uses: astral-sh/setup-uv@68559e99cc807c1eb7e9238fd43a15bba460eec2 # 10.3.3
         with:
           version: ${{ env.UV_VERSION }}
           enable-cache: true
 
       - name: Set up Python ${{ env.MINIMUM_PYTHON_VERSION }}
         id: setup-python
-        uses: actions/setup-python@83679a892e2d95755f2dac6acb0bfd1e9ac5d548 # v6.1.0
+        uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7.1.0
         with:
           python-version: ${{ env.MINIMUM_PYTHON_VERSION }}
 
@@ -141,7 +133,7 @@ jobs:
         run: make doc-tests cov_report=xml
 
       - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@5a1091511ad55cbe89839c7260b706298ca349f7 # v5.5.1
+        uses: codecov/codecov-action@303a32d7a59b442fa8d48b6a1cc6825c09c847a5 # v7.1.1
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           # directory: ./coverage
@@ -156,7 +148,9 @@ jobs:
           TESTTYPE: doctest
       - name: Install codescene coverage tool
         if: ${{ env.CS_ACCESS_TOKEN != '' }}
-        run: curl https://downloads.codescene.io/enterprise/cli/install-cs-coverage-tool.sh | bash -s -- -y
+        run: curl
+          https://downloads.codescene.io/enterprise/cli/install-cs-coverage-tool.sh
+          | bash -s -- -y
       - name: Upload coverage data to CodeScene
         if: ${{ env.CS_ACCESS_TOKEN != '' }}
         run: cs-coverage upload --format "lcov" --metric "line-coverage" coverage.lcov
@@ -172,22 +166,22 @@ jobs:
     #
 
     runs-on: ubuntu-latest
-    name: ubuntu / 3.10 / minimal-versions
+    name: ubuntu / 3.11 / minimal-versions
     steps:
-      - uses: actions/checkout@1af3b93b6815bc44a9784bd300feb67ff0d1eeb3 # v5.0.0
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v5.0.0
         with:
           persist-credentials: false
           submodules: true
 
       - name: Set up uv
-        uses: astral-sh/setup-uv@1e862dfacbd1d6d858c55d9b792c756523627244 # 7.1.4
+        uses: astral-sh/setup-uv@68559e99cc807c1eb7e9238fd43a15bba460eec2 # 10.3.3
         with:
           version: ${{ env.UV_VERSION }}
           enable-cache: true
 
       - name: Set up Python ${{ env.MINIMUM_PYTHON_VERSION }}
         id: setup-python
-        uses: actions/setup-python@83679a892e2d95755f2dac6acb0bfd1e9ac5d548 # v6.1.0
+        uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7.1.0
         with:
           python-version: ${{ env.MINIMUM_PYTHON_VERSION }}
 
@@ -208,6 +202,6 @@ jobs:
     permissions: {}
     steps:
       - name: Decide whether the needed jobs succeeded or failed
-        uses: re-actors/alls-green@05ac9388f0aebcb5727afa17fcccfecd6f8ec5fe # v1.2.2
+        uses: re-actors/alls-green@b5b5b37504aa4183270bd3d855c52a67f212be35 # v1.3.0
         with:
           jobs: ${{ toJSON(needs) }}

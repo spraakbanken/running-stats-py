@@ -32,7 +32,6 @@ To compute running mean and variance, use `RunningMeanVar`.
 Numerical stable.
 
 ```python
-
 mean_var = RunningMeanVar()
 
 for value in floats_from_somewhere():
@@ -49,7 +48,6 @@ print(mean_var.variance())
 You can also combine two `RunningMeanVar`:s.
 
 ```python
-
 mean_var1 = RunningMeanVar()
 
 for value in floats_from_somewhere1():
@@ -75,6 +73,7 @@ from 1.0 to 1.1 allows us to increase the Minimum Supported Python Version. User
 Python version can use an older minor version instead. Below is a list of running-stats versions
 and their Minimum Supported Python Version:
 
+- v0.3: Python 3.11.
 - v0.2: Python 3.10.
 - v0.1: Python 3.9.
 

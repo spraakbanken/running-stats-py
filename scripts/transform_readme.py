@@ -20,8 +20,7 @@ from pathlib import Path
 def main(target: str) -> None:
     """Modify the README.md to support the given target."""
     # Replace the benchmark images based on the target.
-    with Path("README.md").open(encoding="utf8") as fp:
-        content = fp.read()
+    content = Path("README.md").read_text(encoding="utf8")
 
     if target != "pypi":
         msg = f"Unknown target: {target}"
@@ -64,15 +63,14 @@ def main(target: str) -> None:
         url = match.group(1)
         if not url.startswith("http"):
             url = urllib.parse.urljoin(
-                f"https://github.com/spraakbanken/running-stats-py/blob/{version}/README.md",
+                f"https://github.com/spraakbanken/running-stats-py/blob/v{version}/README.md",
                 url,
             )
         return f"]({url})"
 
     content = re.sub(r"]\(([^)]+)\)", replace, content)
 
-    with Path("README.md").open("w", encoding="utf8") as fp:
-        fp.write(content)
+    Path("README.md").write_text(content, encoding="utf8")
 
 
 if __name__ == "__main__":

@@ -1,6 +1,12 @@
+import math
+
 import pytest
 
 from running_stats.running_stats import RunningMeanVar, RunningStats
+
+
+def is_close_near_zero(a: float, b: float) -> bool:
+    return math.isclose(a, b, abs_tol=1e-9)
 
 
 @pytest.fixture
@@ -35,29 +41,29 @@ def fixture_value_list() -> list[float]:
 def test_initial_values(cls: type[RunningStats] | type[RunningMeanVar]) -> None:
     rs_empty = cls()
     assert rs_empty.num_values == 0
-    assert rs_empty.M1 == 0.0
-    assert rs_empty.M2 == 0.0
+    assert is_close_near_zero(rs_empty.M1, 0.0)
+    assert is_close_near_zero(rs_empty.M2, 0.0)
 
 
 def test_running_stats_initial_values() -> None:
     rs = RunningStats()
 
-    assert rs.M3 == 0.0
-    assert rs.M4 == 0.0
+    assert is_close_near_zero(rs.M3, 0.0)
+    assert is_close_near_zero(rs.M4, 0.0)
 
 
 @pytest.mark.parametrize("M2", [0.0, 2.0, 4.0, 5.0])
 @pytest.mark.parametrize("n", [2, 5, 11])
-def test_variance_n_gt_1(M2: float, n: int) -> None:  # noqa: N803
+def test_variance_n_gt_1(M2: float, n: int) -> None:
     rs = RunningMeanVar(num_values=n, M2=M2)
-    assert rs.variance() == M2 / (n - 1)
+    assert math.isclose(rs.variance(), M2 / (n - 1))
 
 
 @pytest.mark.parametrize("M2", [0.0, 2.0, 4.0, 5.0])
 @pytest.mark.parametrize("n", [0, 1])
-def test_variance_n_eq_0_or_1(M2: float, n: int) -> None:  # noqa: N803
+def test_variance_n_eq_0_or_1(M2: float, n: int) -> None:
     rs = RunningMeanVar(num_values=n, M2=M2)
-    assert rs.variance() == 0.0
+    assert is_close_near_zero(rs.variance(), 0.0)
 
 
 @pytest.mark.parametrize("cls", [RunningMeanVar, RunningStats])
@@ -65,16 +71,16 @@ def test_one_value(cls: type[RunningStats] | type[RunningMeanVar]) -> None:
     rs_one_value = cls()
     rs_one_value.push(4.0)
     assert rs_one_value.num_values == 1
-    assert rs_one_value.M1 == 4.0
-    assert rs_one_value.M2 == 0.0
+    assert math.isclose(rs_one_value.M1, 4.0)
+    assert is_close_near_zero(rs_one_value.M2, 0.0)
 
 
 def test_running_stats_one_value() -> None:
     rs = RunningStats()
     value = 6.0
     rs.push(value)
-    assert rs.M3 == 0.0
-    assert rs.M4 == 0.0
+    assert is_close_near_zero(rs.M3, 0.0)
+    assert is_close_near_zero(rs.M4, 0.0)
 
 
 @pytest.mark.parametrize("cls", [RunningMeanVar, RunningStats])
@@ -83,8 +89,8 @@ def test_two_values(cls: type[RunningStats] | type[RunningMeanVar]) -> None:
     rs_two_values.push(4.0)
     rs_two_values.push(6.0)
     assert rs_two_values.num_values == 2
-    assert rs_two_values.M1 == 5.0
-    assert rs_two_values.M2 == 2.0
+    assert math.isclose(rs_two_values.M1, 5.0)
+    assert math.isclose(rs_two_values.M2, 2.0)
 
 
 def test_running_stats_two_values() -> None:
@@ -94,11 +100,11 @@ def test_running_stats_two_values() -> None:
         rs.push(value)
     expected_mean = sum(values) / len(values)
     assert expected_mean == rs.M1
-    expected_M2 = sum((x - expected_mean) ** 2 for x in values)  # noqa: N806
+    expected_M2 = sum((x - expected_mean) ** 2 for x in values)
     assert expected_M2 == rs.M2
-    expected_M3 = sum((x - expected_mean) ** 3 for x in values)  # noqa: N806
+    expected_M3 = sum((x - expected_mean) ** 3 for x in values)
     assert expected_M3 == rs.M3
-    expected_M4 = sum((x - expected_mean) ** 4 for x in values)  # noqa: N806
+    expected_M4 = sum((x - expected_mean) ** 4 for x in values)
     assert expected_M4 == rs.M4
 
 
@@ -109,16 +115,16 @@ def test_three_values(cls: type[RunningStats] | type[RunningMeanVar]) -> None:
     rs.push(6.0)
     rs.push(2.0)
     assert rs.num_values == 3
-    assert rs.M1 == 4.0
-    assert rs.M2 == 8.0
+    assert math.isclose(rs.M1, 4.0)
+    assert math.isclose(rs.M2, 8.0)
 
 
 def test_push_iter_with_list(value_list: list[float]) -> None:
     rs = RunningMeanVar()
     rs.push_iter(value_list)
     assert rs.num_values == len(value_list)
-    assert rs.mean() == -0.25
-    assert rs.variance() == 4.916666666666667
+    assert math.isclose(rs.mean(), -0.25)
+    assert math.isclose(rs.variance(), 4.916666666666667)
 
 
 def test_add_two_running_mean_var() -> None:
@@ -134,8 +140,8 @@ def test_add_two_running_mean_var() -> None:
 
     c = a + b
     assert c.num_values == a.num_values + b.num_values
-    assert c.M1 == 42.0 / 9
-    assert c.M2 == 43.2
+    assert math.isclose(c.M1, 42.0 / 9)
+    assert math.isclose(c.M2, 43.2)
 
 
 def test_iadd_two_running_mean_var() -> None:
@@ -151,8 +157,8 @@ def test_iadd_two_running_mean_var() -> None:
 
     a += b
     assert a.num_values == 11
-    assert a.M1 == -18.0 / 11
-    assert a.M2 == 5.2 + 25.0 * 24 / 11
+    assert math.isclose(a.M1, -18.0 / 11)
+    assert math.isclose(a.M2, 5.2 + 25.0 * 24 / 11)
 
 
 @pytest.mark.parametrize("klass", [RunningMeanVar, RunningStats])
@@ -162,3 +168,14 @@ def test_that_it_is_possible_to_add_two_empty(
     a = klass() + klass()
 
     assert a.num_values == 0
+
+
+def test_add_several_of_same_value() -> None:
+    rm = RunningMeanVar()
+    value = 1.2
+    num = 12
+    for _ in range(num):
+        rm.push(value)
+
+    assert rm.num_values == num
+    assert math.isclose(rm.M1, value)

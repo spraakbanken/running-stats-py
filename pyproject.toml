@@ -6,7 +6,7 @@ readme = "README.md"
 requires-python = ">=3.11"
 license = "MIT"
 license-files = ["LICENSE"]
-authors = [{ name = "Språkbanken Text", email = "sb-info@svenska.gu.se" }]
+authors = [{ name = "Språkbanken", email = "sb-info@svenska.gu.se" }]
 classifiers = [
   "Development Status :: 4 - Beta",
   # "Development Status :: 5 - Production/Stable",
@@ -18,6 +18,7 @@ classifiers = [
   "Programming Language :: Python :: 3.12",
   "Programming Language :: Python :: 3.13",
   "Programming Language :: Python :: 3.14",
+  "Programming Language :: Python :: 3.15",
   "Programming Language :: Python :: Implementation :: CPython",
   # "uncomment if you test on these interpreters:",
   # "Programming Language :: Python :: Implementation :: IronPython",
@@ -28,7 +29,7 @@ classifiers = [
 dependencies = ["attrs>=25.1.0"]
 
 [project.urls]
-Homepage = "https://spraakbanken.gu.se"
+Homepage = "https://spraakbanken.se"
 Issues = "https://github.com/spraakbanken/running-stats-py/issues"
 Repository = "https://github.com/spraakbanken/running-stats-py"
 

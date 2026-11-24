@@ -5,6 +5,64 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [unreleased]
+
+### Changed
+
+- Mark Python 3.15 as supported (as it is tested) by [@kod-kristoff](https://github.com/kod-kristoff)
+- Raise Minimum Supported Python Version to 3.11 by [@kod-kristoff](https://github.com/kod-kristoff)
+
+### Internal
+
+- Improve test stability with math.isclose by [@kod-kristoff](https://github.com/kod-kristoff)
+
+### Removed
+
+- Remove unneeded lint suppressions by [@kod-kristoff](https://github.com/kod-kristoff)
+
+## [0.2.0] - 2025-12-04
+
+### Added
+
+- Add **add** to RunningStats by [@kod-kristoff](https://github.com/kod-kristoff)
+
+### Documentation
+
+- Improve docs by [@kod-kristoff](https://github.com/kod-kristoff)
+- Add transform_readme.py script by [@kod-kristoff](https://github.com/kod-kristoff)
+- Update Readme.md by [@kod-kristoff](https://github.com/kod-kristoff)
+
+### Fixed
+
+- Allow two add 2 empty RunningMeanVar by [@kod-kristoff](https://github.com/kod-kristoff)
+
+### Build
+
+- _(deps)_ Bump pytest from 8.3.4 to 9.0.1 by [@dependabot[bot]](https://github.com/dependabot[bot])
+- _(deps)_ Bump pytest-cov from 6.0.0 to 7.0.0 by [@dependabot[bot]](https://github.com/dependabot[bot])
+- _(deps)_ Bump actions/checkout from 6.pre.beta to 6.0.0 by [@dependabot[bot]](https://github.com/dependabot[bot])
+- _(deps)_ Bump actions/setup-python from 6.0.0 to 6.1.0 by [@dependabot[bot]](https://github.com/dependabot[bot])
+- _(deps)_ Bump astral-sh/setup-uv from 7.1.3 to 7.1.4 by [@dependabot[bot]](https://github.com/dependabot[bot])
+- _(deps)_ Bump astral-sh/setup-uv from 7.1.2 to 7.1.3 by [@dependabot[bot]](https://github.com/dependabot[bot])
+- _(deps)_ Bump actions/checkout by [@dependabot[bot]](https://github.com/dependabot[bot])
+- _(deps)_ Bump astral-sh/setup-uv from 7.1.0 to 7.1.2 by [@dependabot[bot]](https://github.com/dependabot[bot])
+- _(deps)_ Bump actions/upload-artifact from 4.6.2 to 5.0.0 by [@dependabot[bot]](https://github.com/dependabot[bot])
+- _(deps)_ Bump actions/download-artifact by [@dependabot[bot]](https://github.com/dependabot[bot])
+- _(deps)_ Bump astral-sh/setup-uv by [@dependabot[bot]](https://github.com/dependabot[bot])
+- _(deps)_ Bump astral-sh/setup-uv by [@dependabot[bot]](https://github.com/dependabot[bot])
+- _(deps)_ Bump actions/download-artifact by [@dependabot[bot]](https://github.com/dependabot[bot])
+- _(deps)_ Bump astral-sh/setup-uv by [@dependabot[bot]](https://github.com/dependabot[bot])
+- _(deps)_ Bump actions/download-artifact by [@dependabot[bot]](https://github.com/dependabot[bot])
+- _(deps)_ Bump astral-sh/setup-uv by [@dependabot[bot]](https://github.com/dependabot[bot])
+- _(deps)_ Bump codecov/codecov-action from 5.5.0 to 5.5.1 by [@dependabot[bot]](https://github.com/dependabot[bot])
+- _(deps)_ Bump pypa/gh-action-pypi-publish from 1.12.4 to 1.13.0 by [@dependabot[bot]](https://github.com/dependabot[bot])
+- _(deps)_ Bump actions/setup-python from 5.6.0 to 6.0.0 by [@dependabot[bot]](https://github.com/dependabot[bot])
+
+### New Contributors
+
+- @dependabot[bot] made their first contribution
+- @pre-commit-ci[bot] made their first contribution
+
 ## [0.2.0] - 2025-12-04
 
 ### Added
